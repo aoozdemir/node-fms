@@ -12,7 +12,6 @@ router.get('/', function (req, res) {
   let path = (req.query.path ? req.query.path : '.')
 
   if (fs.existsSync(argv.directory + path)) {
-
     let stats = fs.statSync(argv.directory + path);
 
     if (stats.isFile()) {

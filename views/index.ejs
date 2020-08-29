@@ -1,11 +1,46 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+    crossorigin="anonymous" />
+</head>
+
+<body>
+  <h1><%= title %></h1>
+
+  <div style="margin-bottom: 20px; display: block;">
+    <a href="/">Root Directory</a>
+    <% if (originalUrl != "/") { %>
+    -
+    <a href="?path=<%= backUrl %>">Back</a>
+    <% } %>
+  </div>
+
+  <% for (var i=0; i<items.length;  i++ ) { %>
+  <div>
+    <% if (items[i].is_dir) { %>
+    <i class="meta far fa-folder"></i>
+    <% } else { %>
+    <i class="meta far fa-file"></i>
+    <% } %>
+    <% let nextUrl %>
+    <% if (originalUrl != "/") { %>
+    <% nextUrl = currentPath +'/' + items[i].name %>
+    <% } else { %>
+    <% nextUrl = items[i].name %>
+    <% } %>
+
+    <% if (items[i].is_dir) { %>
+    <a href="?path=<%= nextUrl %>"><%= items[i].name %></a>
+    <% } else { %>
+    <%= items[i].name %>
+    <% } %>
+  </div>
+  <% } %>
+</body>
+
 </html>
