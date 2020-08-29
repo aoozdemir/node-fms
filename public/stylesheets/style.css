@@ -13,6 +13,21 @@ a {
   width: 20px;
 }
 
-.filename {
-  display: inline;
+.item:hover .actions {
+  display: inline-block;
+}
+
+.actions {
+  display: none;
+}
+
+.action {
+  display: none;
+  margin: 0 3px;
+  cursor: pointer;
+  opacity: .2;
+}
+
+.action:hover {
+  opacity: 1;
 }

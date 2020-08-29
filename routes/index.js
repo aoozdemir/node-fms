@@ -8,30 +8,37 @@ const axios = require('axios');
 router.get('/', function (req, res, next) {
   let backUrl;
   let path = req.query.path ? req.query.path : '.'
+  let file = req.query.file ? req.query.file : 0
 
-  if (req.query.path && req.query.path.split("/").length > 1) {
-    backUrl = req.query.path.split("/").slice(0, -1).join('/')
+  if (file) {
+    res.sendFile(argv.directory + path, { dotfiles: 'allow' })
   } else {
-    backUrl = '/'
+    // calculate the previous page
+    if (req.query.path && req.query.path.split("/").length > 1) {
+      backUrl = "?path=" + req.query.path.split("/").slice(0, -1).join('/')
+    } else {
+      backUrl = '/'
+    }
+
+    axios.get(`http://localhost:${+argv.port}/api`, {
+      params: {
+        path: path
+      }
+    })
+      .then(function (response) {
+        res.render('index', {
+          title: 'Node File Management',
+          items: response.data,
+          backUrl: backUrl,
+          originalUrl: req.originalUrl,
+          currentPath: path,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
-  axios.get(`http://localhost:${+argv.port}/api`, {
-    params: {
-      path: path
-    }
-  })
-    .then(function (response) {
-      res.render('index', {
-        title: 'Node File Management',
-        items: response.data,
-        backUrl: backUrl,
-        originalUrl: req.originalUrl,
-        currentPath: path,
-      });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
 });
 
 module.exports = router;

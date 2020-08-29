@@ -13,15 +13,17 @@
   <h1><%= title %></h1>
 
   <div style="margin-bottom: 20px; display: block;">
-    <a href="/">Root Directory</a>
     <% if (originalUrl != "/") { %>
-    -
-    <a href="?path=<%= backUrl %>">Back</a>
+    <a href="/"><i class="meta fas fa-angle-double-left"></i></a>
+    <a href="<%= backUrl %>"><i class="meta fas fa-angle-left"></i></a>
+    <% } else { %>
+    <i style="opacity: .2;" class="meta fas fa-angle-double-left"></i>
+    <i style="opacity: .2;" class="meta fas fa-angle-left"></i>
     <% } %>
   </div>
 
-  <% for (var i=0; i<items.length;  i++ ) { %>
-  <div>
+  <% for (var i=0; i<items.length;  i++) { %>
+  <div style="min-width: 300px;" class="item">
     <% if (items[i].is_dir) { %>
     <i class="meta far fa-folder"></i>
     <% } else { %>
@@ -34,11 +36,19 @@
     <% nextUrl = items[i].name %>
     <% } %>
 
-    <% if (items[i].is_dir) { %>
-    <a href="?path=<%= nextUrl %>"><%= items[i].name %></a>
-    <% } else { %>
-    <%= items[i].name %>
-    <% } %>
+    <div style="width: 250px; display: inline-block;">
+      <% if (items[i].is_dir) { %>
+      <a href="?path=<%= nextUrl %>"><%= items[i].name %></a>
+      <% } else { %>
+      <a style="text-decoration: none;" href="?path=<%= nextUrl %>&file=1"><%= items[i].name %></a>
+      <% } %>
+    </div>
+
+    <div class="actions">
+      <i class="action far fa-edit"></i>
+      <i class="action fas fa-arrows-alt"></i>
+      <i class="action far fa-trash-alt"></i>
+    </div>
   </div>
   <% } %>
 </body>
