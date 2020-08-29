@@ -4,8 +4,8 @@ let path = require('path');
 let express = require('express')
 let router = express.Router()
 
-let argv = require('./utils/argv');
-let fm = require('./utils/file_manager');
+let argv = require('../utils/argv');
+let fm = require('../utils/file_manager');
 
 router.get('/', function (req, res) {
   let body;
