@@ -15,10 +15,12 @@ a {
 
 .item:hover .actions {
   display: inline-block;
+  visibility: visible;
 }
 
 .actions {
-  display: none;
+  display: inline-block;
+  visibility: hidden;
 }
 
 .action {

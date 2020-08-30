@@ -52,12 +52,39 @@
     </span>
 
     <div class="actions">
-      <i class="action far fa-edit"></i>
-      <i class="action fas fa-arrows-alt"></i>
-      <i class="action far fa-trash-alt"></i>
+      <button style="border: none; background: none;" onclick="showRenameForm('<%= i %>')">
+        <i class="action fas fa-arrows-alt"></i>
+      </button>
+
+      <form method="POST" id="deleteForm" action="/api?path=<%= nextUrl %>&_method=DELETE" style="display: inline;">
+        <button style="cursor: pointer; border: none; background: none;" type="submit">
+          <i class="action far fa-trash-alt"></i>
+        </button>
+      </form>
+    </div>
+
+    <div style="margin-left: 15px; display: inline-block;">
+      <form method="POST" id='renameForm-<%= i %>' action="/api?path=<%= nextUrl %>&_method=PUT" style="display: none;">
+        <input style="width: 250px;" type="text" name="targetPath" id="renamePath" value="<%= nextUrl %>">
+        <button style="cursor: pointer; border: none; background: none;" type="submit">
+          <i class="fas fa-check"></i>
+        </button>
+      </form>
     </div>
   </div>
   <% } %>
 </body>
+
+<script>
+  function showRenameForm(i) {
+    let renameForm = document.getElementById(`renameForm-${i}`)
+
+    if (renameForm.style.display == 'none') {
+      renameForm.style.display = 'inline-block'
+    } else {
+      renameForm.style.display = 'none'
+    }
+  }
+</script>
 
 </html>

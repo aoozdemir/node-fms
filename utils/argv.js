@@ -16,7 +16,7 @@ let argv = require('optimist')
   .argv;
 
 if (argv.directory) {
-  argv.directory = path.join(__dirname, argv.directory);
+  argv.directory = path.join(__dirname, '../', argv.directory);
 } else {
   argv.directory = path.join(__dirname, '../');
 }

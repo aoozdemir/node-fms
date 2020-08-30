@@ -27,7 +27,15 @@ router.get('/', function (req, res) {
 })
 
 router.delete('/', function (req, res) {
+  let backUrl;
   let path = (req.query.path ? req.query.path : '.')
+
+  // calculate the previous page
+  if (req.query.path && req.query.path.split("/").length > 1) {
+    backUrl = "?path=" + req.query.path.split("/").slice(0, -1).join('/')
+  } else {
+    backUrl = '/'
+  }
 
   if (fs.existsSync(argv.directory + path)) {
     let stats = fs.statSync(argv.directory + path);
@@ -37,7 +45,7 @@ router.delete('/', function (req, res) {
         console.log('is file')
         fs.unlinkSync(argv.directory + path)
       } else {
-        if (fs.readdirSync(path).length != 0) {
+        if (fs.readdirSync(argv.directory + path).length != 0) {
           res.send({ 'message': 'directory not empty' })
         } else {
           console.log('is folder')
@@ -46,19 +54,39 @@ router.delete('/', function (req, res) {
       }
 
       console.log('deletion complete');
+      res.writeHead(302, {
+        'Location': `http://localhost:${+argv.port}${backUrl}`
+      });
       res.end();
     } catch (err) {
       console.error(err)
+      res.writeHead(302, {
+        'Location': `http://localhost:${+argv.port}${backUrl}`
+      });
+      res.end();
     }
   } else {
     res.send({ 'message': 'no file or directory' })
+    res.writeHead(302, {
+      'Location': `http://localhost:${+argv.port}${backUrl}`
+    });
+    res.end();
   }
 })
 
 router.put('/', function (req, res) {
-  if (!req.query.target) {
-    console.log('target needed!')
-    res.send({ 'message': 'target needed' })
+  let backUrl;
+
+  // calculate the previous page
+  if (req.query.path && req.query.path.split("/").length > 1) {
+    backUrl = "?path=" + req.query.path.split("/").slice(0, -1).join('/')
+  } else {
+    backUrl = '/'
+  }
+
+  if (!req.body.targetPath) {
+    console.log('targetPath needed!')
+    res.send({ 'message': 'targetPath needed' })
     return
   }
 
@@ -69,7 +97,10 @@ router.put('/', function (req, res) {
   }
 
   if (fs.existsSync(argv.directory + req.query.path)) {
-    fs.renameSync(req.query.path, req.query.target)
+    fs.renameSync(argv.directory + req.query.path, argv.directory + req.body.targetPath)
+    res.writeHead(302, {
+      'Location': `http://localhost:${+argv.port}${backUrl}`
+    });
     res.end()
   } else {
     res.send({ 'message': 'no file or directory' })
