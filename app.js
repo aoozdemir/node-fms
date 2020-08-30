@@ -11,8 +11,6 @@ let indexRouter = require('./routes/index');
 
 let argv = require('./utils/argv');
 
-const directoryPath = path.join(__dirname, argv.directory);
-
 let app = express();
 
 // view engine setup
@@ -24,6 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Needed to override the form method to either PUT or DELETE
 app.use(methodOverride('_method'))
 
 app.use('/', indexRouter);

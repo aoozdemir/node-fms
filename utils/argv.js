@@ -21,5 +21,4 @@ if (argv.directory) {
   argv.directory = path.join(__dirname, '../');
 }
 
-
 module.exports = argv
