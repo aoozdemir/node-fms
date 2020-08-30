@@ -36,13 +36,20 @@
     <% nextUrl = items[i].name %>
     <% } %>
 
-    <div style="width: 250px; display: inline-block;">
+    <div style="width: 200px; display: inline-block;">
       <% if (items[i].is_dir) { %>
       <a href="?path=<%= nextUrl %>"><%= items[i].name %></a>
       <% } else { %>
       <a style="text-decoration: none;" href="?path=<%= nextUrl %>&file=1"><%= items[i].name %></a>
       <% } %>
     </div>
+
+    <span style="opacity: .5; font-size: 0.7em; width: 80px; display: inline-block; margin-right: 20px">
+      <%= humanSize(items[i].size) %>
+    </span>
+    <span style="opacity: .5; font-size: 0.7em; width: 150px; display: inline-block;">
+      <%= humanTime(items[i].mtime) %>
+    </span>
 
     <div class="actions">
       <i class="action far fa-edit"></i>

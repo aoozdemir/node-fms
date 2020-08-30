@@ -3,6 +3,7 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
+let strftime = require('strftime')
 
 let apiRouter = require('./routes/api');
 let indexRouter = require('./routes/index');
@@ -30,6 +31,21 @@ app.use('/api', apiRouter);
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
+app.locals = {
+  humanSize: function (size) {
+    let hz;
+    if (size < 1024) hz = size + ' B';
+    else if (size < 1024 * 1024) hz = (size / 1024).toFixed(2) + ' KB';
+    else if (size < 1024 * 1024 * 1024) hz = (size / 1024 / 1024).toFixed(2) + ' MB';
+    else hz = (size / 1024 / 1024 / 1024).toFixed(2) + ' GB';
+    return hz;
+  },
+  humanTime: function (timestamp) {
+    let t = new Date(timestamp);
+    return strftime("%b %d, %Y %H:%M:%S", t);
+  }
+}
 
 // error handler
 app.use(function (err, req, res, next) {
