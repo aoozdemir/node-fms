@@ -8,6 +8,7 @@ let strftime = require('strftime')
 
 let apiRouter = require('./routes/api');
 let indexRouter = require('./routes/index');
+let editRouter = require('./routes/edit');
 
 let argv = require('./utils/argv');
 
@@ -28,6 +29,7 @@ app.use(methodOverride('_method'))
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
+app.use('/edit', editRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
