@@ -23,8 +23,11 @@
   </div>
 
   <form method="POST" id="saveForm" action="/api/save?path=<%= currentPath %>">
+    <button style="cursor: pointer; border: none; background: none; font-size: 2em; color: #00B7FF;" type="submit">
+      <i class="fas fa-save"></i>
+    </button>
+    <br>
     <textarea name="content" id="" cols="100" rows="50"><%= fileContent %></textarea>
-    <button type="submit">Save</button>
   </form>
 </body>
 
