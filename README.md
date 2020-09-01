@@ -35,5 +35,5 @@ Initially PUT endpoint was also expecting a `target` parameter. However, I later
 Following functionalities are missing at the moment.
 
 - [x] Content editing
-- [ ] Create a directory on the frontend
+- [x] Create a directory on the frontend
 - [ ] A virtual terminal to handle command line operations

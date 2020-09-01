@@ -10,7 +10,7 @@ let fm = require('../utils/file_manager');
 // List directories
 router.get('/', function (req, res) {
   let body;
-  let path = (req.query.path ? req.query.path : '.')
+  let path = (req.query.path ? req.query.path : '/')
 
   if (fs.existsSync(argv.directory + path)) {
     let stats = fs.statSync(argv.directory + path);
@@ -30,7 +30,7 @@ router.get('/', function (req, res) {
 // Delete a file or directory
 router.delete('/', function (req, res) {
   let backUrl;
-  let path = (req.query.path ? req.query.path : '.')
+  let path = (req.query.path ? req.query.path : '/')
 
   // calculate the previous page for redirect
   if (req.query.path && req.query.path.split("/").length > 1) {
@@ -121,10 +121,13 @@ router.post('/', function (req, res) {
     return
   }
 
-  if (fs.existsSync(argv.directory + req.query.path)) {
+  if (fs.existsSync(argv.directory + req.query.path + '/' + req.body.folderPath)) {
     res.send({ 'message': 'directory already exists' })
   } else {
-    fs.mkdirSync(argv.directory + req.query.path, { recursive: true });
+    fs.mkdirSync(argv.directory + req.query.path + '/' + req.body.folderPath, { recursive: true });
+    res.writeHead(302, {
+      'Location': `http://localhost:${+argv.port}?path=${req.query.path}`
+    });
     res.end()
   }
 })

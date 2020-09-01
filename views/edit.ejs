@@ -22,10 +22,7 @@
     <% } %>
   </div>
 
-  <% let nextUrl %>
-  <% nextUrl = currentPath %>
-
-  <form method="POST" id="saveForm" action="/api/save?path=<%= nextUrl %>">
+  <form method="POST" id="saveForm" action="/api/save?path=<%= currentPath %>">
     <textarea name="content" id="" cols="100" rows="50"><%= fileContent %></textarea>
     <button type="submit">Save</button>
   </form>

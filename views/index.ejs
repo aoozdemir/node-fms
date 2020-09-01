@@ -20,6 +20,17 @@
     <i style="opacity: .2;" class="meta fas fa-angle-double-left"></i>
     <i style="opacity: .2;" class="meta fas fa-angle-left"></i>
     <% } %>
+
+    <button style="cursor: pointer; border: none; background: none; color: #00B7FF;" onclick="showCreateForm()">
+      <i class="meta far fa-plus-square"></i>
+    </button>
+
+    <form method="POST" id="createForm" action="/api?path=<%= currentPath %>" style="display: none;">
+      <input style="width: 250px;" type="text" name="folderPath" placeholder="Place folder name">
+      <button style="cursor: pointer; border: none; background: none;" type="submit">
+        <i class="fas fa-check"></i>
+      </button>
+    </form>
   </div>
 
   <% for (var i=0; i<items.length;  i++) { %>
@@ -83,6 +94,16 @@
       renameForm.style.display = 'inline-block'
     } else {
       renameForm.style.display = 'none'
+    }
+  }
+
+  function showCreateForm() {
+    let createForm = document.getElementById('createForm')
+
+    if (createForm.style.display == 'none') {
+      createForm.style.display = 'inline-block'
+    } else {
+      createForm.style.display = 'none'
     }
   }
 </script>

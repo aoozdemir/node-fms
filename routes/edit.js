@@ -6,7 +6,7 @@ let argv = require('../utils/argv');
 
 router.get('/', function (req, res, next) {
   let backUrl;
-  let path = req.query.path ? req.query.path : '.'
+  let path = req.query.path ? req.query.path : '/'
   let file = req.query.file ? req.query.file : 0
 
   if (file) {
